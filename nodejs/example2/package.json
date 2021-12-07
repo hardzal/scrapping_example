@@ -1,0 +1,15 @@
+{
+  "name": "example2",
+  "version": "1.0.0",
+  "description": "- https://dev.to/jakedeng/web-scraping-with-nodejs-4f2c\r - https://dev.to/code_jedi/web-scraping-in-nodejs-2lkf",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "puppeteer": "^12.0.1"
+  }
+}
