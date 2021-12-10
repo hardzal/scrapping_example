@@ -4,7 +4,10 @@ import requests
 import pandas as pd
 from requests.api import post
 
+bulan = [1,2,3,4,5,6]
+tanggal = [32,29,32,31,32,31]
 link = 'https://www.tempo.co/indeks'
+
 data_set = {"post_title": [], "post_thumbnail_url": [], "post_summary": [], "post_date": [], "post_url": [], "post_image_url": [], "post_image_caption": [], "post_content": [], "post_tags": []}
 
 def detail_post(details):
@@ -41,13 +44,22 @@ def search_posts(posts):
 
 
 if __name__ == '__main__':
-    html_result = requests.get(f"{link}/2021/01/01")
-    result = BeautifulSoup(html_result.content, 'lxml')
-    post_wrapper = result.find('ul', class_='wrapper')
-    posts = post_wrapper.find_all('div', class_='card card-type-1')
+    count = 1
+    for bln in bulan:
+        for tgl in range(1, tanggal[bulan.index(bln)]):
+            html_result = [] 
+            if(tgl < 10):
+                html_result = requests.get(f"{link}/2021/0{bln}/0{tgl}")
+            else:
+                html_result = requests.get(f"{link}/2021/0{bln}/{tgl}")
+            result = BeautifulSoup(html_result.content, 'lxml')
+            post_wrapper = result.find('ul', class_='wrapper')
+            posts = post_wrapper.find_all('div', class_='card card-type-1')
 
-    search_posts(posts)
-
+            search_posts(posts)
+            print(count)
+            count = count + 1
+        
     df = pd.DataFrame(data_set, columns=['post_title', 'post_thumbnail_url', 'post_summary', 'post_date', 'post_url', 'post_image_url', 'post_image_caption', 'post_content', 'post_tags'])
     df.to_csv(r'D:\Code\scrapping-example\python\tempo\dataset\result.csv', index = False, header=True)
 
